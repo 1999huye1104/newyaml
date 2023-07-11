@@ -459,7 +459,7 @@ spec:
     spec:
       containers:
       - name: buildermgr
-        image: "huyezs/fission-bundle:v1.17.8"
+        image: "huyezs/fission-bundle:v1.17.9"
         imagePullPolicy: IfNotPresent
         command: ["/fission-bundle"]
         args: ["--builderMgr", "--storageSvcUrl", "http://storagesvc.fission", "--envbuilder-namespace", "fission-builder"]
@@ -532,7 +532,7 @@ spec:
     spec:
       containers:
       - name: controller
-        image: "huyezs/fission-bundle:v1.17.8"
+        image: "huyezs/fission-bundle:v1.17.9"
         imagePullPolicy: IfNotPresent
         command: ["/fission-bundle"]
         args: ["--controllerPort", "8888"]
@@ -614,7 +614,7 @@ spec:
     spec:
       containers:
       - name: executor
-        image: "huyezs/fission-bundle:v1.17.8"
+        image: "huyezs/fission-bundle:v1.17.9"
         imagePullPolicy: IfNotPresent
         command: ["/fission-bundle"]
         args: ["--executorPort", "8888", "--namespace", "fission-function"]
@@ -699,7 +699,7 @@ spec:
     spec:
       containers:
       - name: kubewatcher
-        image: "huyezs/fission-bundle:v1.17.8"
+        image: "huyezs/fission-bundle:v1.17.9"
         imagePullPolicy: IfNotPresent
         command: ["/fission-bundle"]
         args: ["--kubewatcher", "--routerUrl", "http://router.fission"]
@@ -747,7 +747,7 @@ spec:
     spec:
       containers:
       - name:  mqtrigger-keda
-        image: "huyezs/fission-bundle:v1.17.8"
+        image: "huyezs/fission-bundle:v1.17.9"
         imagePullPolicy: IfNotPresent
         command: ["/fission-bundle"]
         args: ["--mqt_keda", "--routerUrl", "http://router.fission"]
@@ -815,7 +815,7 @@ spec:
     spec:
       containers:
       - name: router
-        image: "huyezs/fission-bundle:v1.17.8"
+        image: "huyezs/fission-bundle:v1.17.9"
         imagePullPolicy: IfNotPresent
         command: ["/fission-bundle"]
         args: ["--routerPort", "8888", "--executorUrl", "http://executor.fission"]
@@ -917,7 +917,7 @@ spec:
     spec:
       containers:
       - name: agent
-        image: "huyezs/fission-bundle:v1.17.8"
+        image: "huyezs/fission-bundle:v1.17.9"
         imagePullPolicy: IfNotPresent
         command: ["/fission-bundle"]
         args: ["--agentPort", "8888", "--executorUrl", "http://executor.fission"]
@@ -1019,7 +1019,7 @@ spec:
     spec:
       containers:
       - name: storagesvc
-        image: "huyezs/fission-bundle:v1.17.8"
+        image: "huyezs/fission-bundle:v1.17.9"
         imagePullPolicy: IfNotPresent
         command: ["/fission-bundle"]
         args: ["--storageServicePort", "8000", "--storageType", "local"]
@@ -1093,7 +1093,7 @@ spec:
     spec:
       containers:
       - name: timer
-        image: "huyezs/fission-bundle:v1.17.8"
+        image: "huyezs/fission-bundle:v1.17.9"
         imagePullPolicy: IfNotPresent
         command: ["/fission-bundle"]
         args: ["--timer", "--routerUrl", "http://router.fission"]
