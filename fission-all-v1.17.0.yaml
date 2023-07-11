@@ -106,6 +106,8 @@ rules:
   resources:
   - jobs
   verbs:
+  - create
+  - delete
   - get
   - list
   - watch
@@ -962,14 +964,14 @@ spec:
           {}
         readinessProbe:
           httpGet:
-            path: "/agent-healthz"
+            path: "/router-healthz"
             port: 8888
           initialDelaySeconds: 1
           periodSeconds: 1
           failureThreshold: 30
         livenessProbe:
           httpGet:
-            path: "/agent-healthz"
+            path: "/router-healthz"
             port: 8888
           initialDelaySeconds: 35
           periodSeconds: 5
