@@ -381,28 +381,28 @@ metadata:
 spec:
   type: NodePort
   ports:
-  - NodePort: 32046
-    port: 80
-    targetPort: 8888
+    - NodePort: 32046
+      port: 80
+      targetPort: 8888
   selector:
     svc: router
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: agent
-  labels:
-    svc: agent
-    application: fission-agent
-    chart: "fission-all-v1.17.0"
-spec:
-  type: NodePort
-  ports:
-  - NodePort: 32338
-    port: 80
-    targetPort: 8888
-  selector:
-    svc: agent
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: agent
+#   labels:
+#     svc: agent
+#     application: fission-agent
+#     chart: "fission-all-v1.17.0"
+# spec:
+#   type: NodePort
+#   ports:
+#     - NodePort: 32338
+#       port: 80
+#       targetPort: 8888
+#   selector:
+#     svc: agent
 ---
 # Source: fission-all/templates/controller/deployment.yaml
 apiVersion: apps/v1
@@ -681,106 +681,106 @@ spec:
           name: feature-config
 ---
 # Source: fission-all/templates/router/deployment.yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: agent
-  labels:
-    chart: "fission-all-v1.17.0"
-    svc: agent
-    application: fission-agent
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      application: fission-agent
-      svc: agent
-  template:
-    metadata:
-      labels:
-        application: fission-agent
-        svc: agent
-      annotations:
-        prometheus.io/scrape: "true"
-        prometheus.io/path: "/metrics"
-        prometheus.io/port: "8080"
-    spec:
-      containers:
-      - name: agent
-        image: "huyezs/fission-bundle:v1.17.20"
-        imagePullPolicy: IfNotPresent
-        command: ["/fission-bundle"]
-        args: ["--agentPort", "8888", "--executorUrl", "http://executor.fission"]
-        env:      
-        - name: POD_NAMESPACE
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.namespace
-        - name: ROUTER_ROUND_TRIP_TIMEOUT
-          value: "50ms"
-        - name: ROUTER_ROUNDTRIP_TIMEOUT_EXPONENT
-          value: "2"
-        - name: ROUTER_ROUND_TRIP_KEEP_ALIVE_TIME
-          value: "30s"
-        - name: ROUTER_ROUND_TRIP_DISABLE_KEEP_ALIVE
-          value: "true"
-        - name: ROUTER_ROUND_TRIP_MAX_RETRIES
-          value: "10"
-        - name: ROUTER_SVC_ADDRESS_MAX_RETRIES
-          value: "5"
-        - name: ROUTER_SVC_ADDRESS_UPDATE_TIMEOUT
-          value: "30s"
-        - name: ROUTER_UNTAP_SERVICE_TIMEOUT
-          value: "3600s"
-        - name: USE_ENCODED_PATH
-          value: "false"
-        - name: DEBUG_ENV
-          value: "false"
-        - name: PPROF_ENABLED
-          value: "false"
-        - name: DISPLAY_ACCESS_LOG
-          value: "false"        
-        - name: OTEL_EXPORTER_OTLP_ENDPOINT
-          value: ""
-        - name: OTEL_EXPORTER_OTLP_INSECURE
-          value: "true"
-        - name: OTEL_TRACES_SAMPLER
-          value: "parentbased_traceidratio"
-        - name: OTEL_TRACES_SAMPLER_ARG
-          value: "0.1"
-        - name: OTEL_PROPAGATORS
-          value: "tracecontext,baggage"
-        resources:
-          {}
-        readinessProbe:
-          httpGet:
-            path: "/router-healthz"
-            port: 8888
-          initialDelaySeconds: 1
-          periodSeconds: 1
-          failureThreshold: 30
-        livenessProbe:
-          httpGet:
-            path: "/router-healthz"
-            port: 8888
-          initialDelaySeconds: 35
-          periodSeconds: 5
-        volumeMounts:
-        - name: config-volume
-          mountPath: /etc/config/config.yaml
-          subPath: config.yaml
-        ports:
-        - containerPort: 8080
-          name: metrics
-        - containerPort: 8888
-          name: http
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
-      serviceAccountName: fission-svc
-      volumes:
-      - name: config-volume
-        configMap:
-          name: feature-config
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: agent
+#   labels:
+#     chart: "fission-all-v1.17.0"
+#     svc: agent
+#     application: fission-agent
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       application: fission-agent
+#       svc: agent
+#   template:
+#     metadata:
+#       labels:
+#         application: fission-agent
+#         svc: agent
+#       annotations:
+#         prometheus.io/scrape: "true"
+#         prometheus.io/path: "/metrics"
+#         prometheus.io/port: "8080"
+#     spec:
+#       containers:
+#       - name: agent
+#         image: "huyezs/fission-bundle:v1.17.20"
+#         imagePullPolicy: IfNotPresent
+#         command: ["/fission-bundle"]
+#         args: ["--agentPort", "8888", "--executorUrl", "http://executor.fission"]
+#         env:      
+#         - name: POD_NAMESPACE
+#           valueFrom:
+#             fieldRef:
+#               fieldPath: metadata.namespace
+#         - name: ROUTER_ROUND_TRIP_TIMEOUT
+#           value: "50ms"
+#         - name: ROUTER_ROUNDTRIP_TIMEOUT_EXPONENT
+#           value: "2"
+#         - name: ROUTER_ROUND_TRIP_KEEP_ALIVE_TIME
+#           value: "30s"
+#         - name: ROUTER_ROUND_TRIP_DISABLE_KEEP_ALIVE
+#           value: "true"
+#         - name: ROUTER_ROUND_TRIP_MAX_RETRIES
+#           value: "10"
+#         - name: ROUTER_SVC_ADDRESS_MAX_RETRIES
+#           value: "5"
+#         - name: ROUTER_SVC_ADDRESS_UPDATE_TIMEOUT
+#           value: "30s"
+#         - name: ROUTER_UNTAP_SERVICE_TIMEOUT
+#           value: "3600s"
+#         - name: USE_ENCODED_PATH
+#           value: "false"
+#         - name: DEBUG_ENV
+#           value: "false"
+#         - name: PPROF_ENABLED
+#           value: "false"
+#         - name: DISPLAY_ACCESS_LOG
+#           value: "false"        
+#         - name: OTEL_EXPORTER_OTLP_ENDPOINT
+#           value: ""
+#         - name: OTEL_EXPORTER_OTLP_INSECURE
+#           value: "true"
+#         - name: OTEL_TRACES_SAMPLER
+#           value: "parentbased_traceidratio"
+#         - name: OTEL_TRACES_SAMPLER_ARG
+#           value: "0.1"
+#         - name: OTEL_PROPAGATORS
+#           value: "tracecontext,baggage"
+#         resources:
+#           {}
+#         readinessProbe:
+#           httpGet:
+#             path: "/router-healthz"
+#             port: 8888
+#           initialDelaySeconds: 1
+#           periodSeconds: 1
+#           failureThreshold: 30
+#         livenessProbe:
+#           httpGet:
+#             path: "/router-healthz"
+#             port: 8888
+#           initialDelaySeconds: 35
+#           periodSeconds: 5
+#         volumeMounts:
+#         - name: config-volume
+#           mountPath: /etc/config/config.yaml
+#           subPath: config.yaml
+#         ports:
+#         - containerPort: 8080
+#           name: metrics
+#         - containerPort: 8888
+#           name: http
+#         terminationMessagePath: /dev/termination-log
+#         terminationMessagePolicy: File
+#       serviceAccountName: fission-svc
+#       volumes:
+#       - name: config-volume
+#         configMap:
+#           name: feature-config
 ---
 # Source: fission-all/templates/timer/deployment.yaml
 apiVersion: apps/v1
