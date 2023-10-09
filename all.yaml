@@ -362,9 +362,10 @@ metadata:
     svc: executor
     chart: "fission-all-v1.17.0"
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
-    - port: 80
+    - NodePort: 32088
+      port: 80
       targetPort: 8888
   selector:
     svc: executor
@@ -431,7 +432,7 @@ spec:
     spec:
       containers:
       - name: controller
-        image: "huyezs/fission-bundle:v1.18.2"
+        image: "huyezs/fission-bundle:v1.18.6"
         imagePullPolicy: IfNotPresent
         command: ["/fission-bundle"]
         args: ["--controllerPort", "8888"]
@@ -513,7 +514,7 @@ spec:
     spec:
       containers:
       - name: executor
-        image: "huyezs/fission-bundle:v1.18.2"
+        image: "huyezs/fission-bundle:v1.18.6"
         imagePullPolicy: IfNotPresent
         command: ["/fission-bundle"]
         args: ["--executorPort", "8888", "--namespace", "fission-function"]
@@ -605,7 +606,7 @@ spec:
     spec:
       containers:
       - name: router
-        image: "huyezs/fission-bundle:v1.18.2"
+        image: "huyezs/fission-bundle:v1.18.6"
         imagePullPolicy: IfNotPresent
         command: ["/fission-bundle"]
         args: ["--routerPort", "8888", "--executorUrl", "http://executor.fission"]
@@ -699,7 +700,7 @@ spec:
     spec:
       containers:
       - name: timer
-        image: "huyezs/fission-bundle:v1.18.2"
+        image: "huyezs/fission-bundle:v1.18.6"
         imagePullPolicy: IfNotPresent
         command: ["/fission-bundle"]
         args: ["--timer", "--routerUrl", "http://router.fission"]
