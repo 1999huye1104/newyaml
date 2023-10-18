@@ -9,7 +9,7 @@ do
     faas-cli function run-kuasar-wasm --name $fn --image ghcr.io/containerd/runwasi/wasi-demo-app:v0.0.1   --port  10086
 
     start=$(date +%s%N)
-    curl -X POST -H "Content-Type: application/json" -d '{"args":["White", "Hank"]}' http://43.135.161.20:32046/fission-function/$fn
+    curl -X POST -H "Content-Type: application/json" -d '{"args":["White", "Hank"]}' http://43.153.27.229:32046/fission-function/$fn
     end=$(date +%s%N)
 
     duration=$((($end - $start)/1000000))
